@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+
+    <title>Collapsible Tree Example</title>
+
+    <style>
+	.node circle {
+	  fill: #fff;
+	  stroke: steelblue;
+	  stroke-width: 2px;
+	}
+	.node text { font: 11px sans-serif; }
+	.link {
+	  fill: none;
+	  stroke: #ccc;
+	  stroke-width: 2px;
+	}
+	
+    </style>
+
+  </head>
+
+  <body>
+
+<!-- load the d3.js library -->	
+<script src="http://d3js.org/d3.v3.min.js"></script>
+	
+<script>
+var data =  [
+        {
+            "name": "VP30",
+            "parent": "null",
+            "username": "cnwhite"
+        },
+        {
+            "name": "OD64",
+            "parent": "VP30",
+            "username": "glynch"
+        },
+        {
+            "name": "OD65",
+            "parent": "VP30",
+            "username": "tgurela"
+        },
+        {
+            "name": "OD66",
+            "parent": "VP30",
+            "username": "bheinric"
+        },
+        {
+            "name": "OD67",
+            "parent": "VP30",
+            "username": "kennmart"
+        },
+        {
+            "name": "OD68",
+            "parent": "VP30",
+            "username": "amsalem"
+        },
+        {
+            "name": "OD69",
+            "parent": "VP30",
+            "username": "grcarter"
+        },
+        {
+            "name": "OD70",
+            "parent": "VP30",
+            "username": "cnwhite"
+        },
+        {
+            "name": "OD71",
+            "parent": "VP30",
+            "username": "irali"
+        },
+        {
+            "name": "RM157",
+            "parent": "OD71",
+            "username": "irali"
+        },
+        {
+            "name": "PSS1511",
+            "parent": "RM157",
+            "username": "irali"
+        },
+        {
+            "name": "PSS1512",
+            "parent": "RM157",
+            "username": "jerrluca"
+        },
+        {
+            "name": "PSS1513",
+            "parent": "RM157",
+            "username": "siyoung"
+        },
+        {
+            "name": "PSS1514",
+            "parent": "RM157",
+            "username": "anhubble"
+        },
+        {
+            "name": "RM154",
+            "parent": "OD70",
+            "username": "cnwhite"
+        },
+        {
+            "name": "PSS1469",
+            "parent": "RM154",
+            "username": "cnwhite"
+        },
+        {
+            "name": "RM155",
+            "parent": "OD69",
+            "username": "grcarter"
+        },
+        {
+            "name": "PSS1491",
+            "parent": "RM155",
+            "username": "grcarter"
+        },
+        {
+            "name": "PSS1492",
+            "parent": "RM155",
+            "username": "hkhalaf"
+        },
+        {
+            "name": "PSS1493",
+            "parent": "RM155",
+            "username": "alongyea"
+        },
+        {
+            "name": "PSS1494",
+            "parent": "RM155",
+            "username": "nrajic"
+        },
+        {
+            "name": "PSS1495",
+            "parent": "RM155",
+            "username": "johnfor"
+        },
+        {
+            "name": "PSS1496",
+            "parent": "RM155",
+            "username": "jgillan"
+        },
+        {
+            "name": "PSS1497",
+            "parent": "RM155",
+            "username": "rarlic"
+        },
+        {
+            "name": "PSS1498",
+            "parent": "RM155",
+            "username": "jpennin"
+        },
+        {
+            "name": "PSS1499",
+            "parent": "RM155",
+            "username": "jrebrig"
+        },
+        {
+            "name": "PSS1500",
+            "parent": "RM155",
+            "username": "bmariath"
+        },
+        {
+            "name": "PSS1501",
+            "parent": "RM155",
+            "username": "mirobin2"
+        },
+        {
+            "name": "PSS1502",
+            "parent": "RM155",
+            "username": "bfrancis"
+        },
+        {
+            "name": "PSS1503",
+            "parent": "RM155",
+            "username": "ashusriv"
+        },
+        {
+            "name": "PSS1504",
+            "parent": "RM155",
+            "username": "dansteph"
+        },
+        {
+            "name": "PSS1519",
+            "parent": "RM155",
+            "username": "dhirscho "
+        },
+        {
+            "name": "PSS1527",
+            "parent": "RM155",
+            "username": "gflorus"
+        },
+        {
+            "name": "RM153",
+            "parent": "OD68",
+            "username": "amsalem"
+        },
+        {
+            "name": "PSS1468",
+            "parent": "RM153",
+            "username": "amsalem"
+        },
+        {
+            "name": "PSS1481",
+            "parent": "RM153",
+            "username": "fidurant"
+        },
+        {
+            "name": "PSS1482",
+            "parent": "RM153",
+            "username": "jmassaut"
+        },
+        {
+            "name": "PSS1483",
+            "parent": "RM153",
+            "username": "mwissman"
+        },
+        {
+            "name": "PSS1484",
+            "parent": "RM153",
+            "username": "krishpra"
+        },
+        {
+            "name": "PSS1485",
+            "parent": "RM153",
+            "username": "yhelmy"
+        },
+        {
+            "name": "PSS1486",
+            "parent": "RM153",
+            "username": "smakayi"
+        },
+        {
+            "name": "PSS1487",
+            "parent": "RM153",
+            "username": "clthomas"
+        },
+        {
+            "name": "PSS1488",
+            "parent": "RM153",
+            "username": "lahorst"
+        },
+        {
+            "name": "PSS1489",
+            "parent": "RM153",
+            "username": "partkar"
+        },
+        {
+            "name": "PSS1490",
+            "parent": "RM153",
+            "username": "camcneil"
+        },
+        {
+            "name": "PSS1505",
+            "parent": "RM153",
+            "username": "juhodgso"
+        },
+        {
+            "name": "PSS1506",
+            "parent": "RM153",
+            "username": "alsavino"
+        },
+        {
+            "name": "RM152",
+            "parent": "OD67",
+            "username": "kennmart"
+        },
+        {
+            "name": "PSS1467",
+            "parent": "RM152",
+            "username": "kennmart"
+        },
+        {
+            "name": "PSS1470",
+            "parent": "RM152",
+            "username": "shaber"
+        },
+        {
+            "name": "PSS1471",
+            "parent": "RM152",
+            "username": "matwalla"
+        },
+        {
+            "name": "PSS1472",
+            "parent": "RM152",
+            "username": "kevinh"
+        },
+        {
+            "name": "PSS1474",
+            "parent": "RM152",
+            "username": "rhanid "
+        },
+        {
+            "name": "PSS1475",
+            "parent": "RM152",
+            "username": "tgunders "
+        },
+        {
+            "name": "PSS1476",
+            "parent": "RM152",
+            "username": "sotlingh"
+        },
+        {
+            "name": "PSS1477",
+            "parent": "RM152",
+            "username": "cchacar "
+        },
+        {
+            "name": "PSS1478",
+            "parent": "RM152",
+            "username": "triche"
+        },
+        {
+            "name": "PSS1479",
+            "parent": "RM152",
+            "username": "mspanoud"
+        },
+        {
+            "name": "PSS1480",
+            "parent": "RM152",
+            "username": "anemes "
+        },
+        {
+            "name": "RM146",
+            "parent": "OD66",
+            "username": "bheinric"
+        },
+        {
+            "name": "RM149",
+            "parent": "OD66",
+            "username": "alfsanto"
+        },
+        {
+            "name": "RM150",
+            "parent": "OD66",
+            "username": "aerdal"
+        },
+        {
+            "name": "PSS1449",
+            "parent": "RM150",
+            "username": "aerdal"
+        },
+        {
+            "name": "PSS1453",
+            "parent": "RM150",
+            "username": "grahport"
+        },
+        {
+            "name": "PSS1454",
+            "parent": "RM150",
+            "username": "iggirkin"
+        },
+        {
+            "name": "PSS1455",
+            "parent": "RM150",
+            "username": "khaallam"
+        },
+        {
+            "name": "PSS1456",
+            "parent": "RM150",
+            "username": "mibotez"
+        },
+        {
+            "name": "PSS1448",
+            "parent": "RM149",
+            "username": "alfsanto"
+        },
+        {
+            "name": "PSS1450",
+            "parent": "RM149",
+            "username": "amalchai"
+        },
+        {
+            "name": "PSS1451",
+            "parent": "RM149",
+            "username": "pguillem"
+        },
+        {
+            "name": "PSS1507",
+            "parent": "RM149",
+            "username": "andycrai"
+        },
+        {
+            "name": "PSS1516",
+            "parent": "RM149",
+            "username": "hvikberg"
+        },
+        {
+            "name": "PSS1517",
+            "parent": "RM149",
+            "username": "fbozzare"
+        },
+        {
+            "name": "PSS1518",
+            "parent": "RM149",
+            "username": "vsorhage"
+        },
+        {
+            "name": "PSS1520",
+            "parent": "RM149",
+            "username": "astoeger"
+        },
+        {
+            "name": "PSS1524",
+            "parent": "RM149",
+            "username": "vscarlat"
+        },
+        {
+            "name": "PSS1525",
+            "parent": "RM149",
+            "username": "aarpatel"
+        },
+        {
+            "name": "PSS1526",
+            "parent": "RM149",
+            "username": "vgrapeng"
+        },
+        {
+            "name": "PSS1431",
+            "parent": "RM146",
+            "username": "bheinric"
+        },
+        {
+            "name": "PSS1509",
+            "parent": "RM146",
+            "username": "strobins"
+        },
+        {
+            "name": "PSS1510",
+            "parent": "RM146",
+            "username": "tonsmit2"
+        },
+        {
+            "name": "RM147",
+            "parent": "OD65",
+            "username": "tgurela"
+        },
+        {
+            "name": "RM151",
+            "parent": "OD65",
+            "username": "wsylvest"
+        },
+        {
+            "name": "RM158",
+            "parent": "OD65",
+            "username": "amolivei"
+        },
+        {
+            "name": "PSS1529",
+            "parent": "RM158",
+            "username": "amolivei"
+        },
+        {
+            "name": "PSS1530",
+            "parent": "RM158",
+            "username": "smacedoj"
+        },
+        {
+            "name": "PSS1531",
+            "parent": "RM158",
+            "username": "ricpena"
+        },
+        {
+            "name": "PSS1532",
+            "parent": "RM158",
+            "username": "manrivas"
+        },
+        {
+            "name": "PSS1457",
+            "parent": "RM151",
+            "username": "wsylvest"
+        },
+        {
+            "name": "PSS1458",
+            "parent": "RM151",
+            "username": "andatkin"
+        },
+        {
+            "name": "PSS1460",
+            "parent": "RM151",
+            "username": "cgalo"
+        },
+        {
+            "name": "PSS1461",
+            "parent": "RM151",
+            "username": "defortie"
+        },
+        {
+            "name": "PSS1462",
+            "parent": "RM151",
+            "username": "edelange"
+        },
+        {
+            "name": "PSS1463",
+            "parent": "RM151",
+            "username": "jacelaya"
+        },
+        {
+            "name": "PSS1464",
+            "parent": "RM151",
+            "username": "jetufts"
+        },
+        {
+            "name": "PSS1465",
+            "parent": "RM151",
+            "username": "mkopczyn"
+        },
+        {
+            "name": "PSS1515",
+            "parent": "RM151",
+            "username": "jarcarte"
+        },
+        {
+            "name": "PSS1521",
+            "parent": "RM151",
+            "username": "testler "
+        },
+        {
+            "name": "PSS1522",
+            "parent": "RM151",
+            "username": "phalls "
+        },
+        {
+            "name": "PSS1523",
+            "parent": "RM151",
+            "username": "brhennes"
+        },
+        {
+            "name": "PSS1528",
+            "parent": "RM151",
+            "username": "tdemeris"
+        },
+        {
+            "name": "PSS1533",
+            "parent": "RM151",
+            "username": "jamoodle"
+        },
+        {
+            "name": "PSS1432",
+            "parent": "RM147",
+            "username": "tgurela"
+        },
+        {
+            "name": "RM145",
+            "parent": "OD64",
+            "username": "glynch"
+        },
+        {
+            "name": "RM148",
+            "parent": "OD64",
+            "username": "mimille2"
+        },
+        {
+            "name": "RM156",
+            "parent": "OD64",
+            "username": "amolivei"
+        },
+        {
+            "name": "PSS1436",
+            "parent": "RM156",
+            "username": "manrivas"
+        },
+        {
+            "name": "PSS1437",
+            "parent": "RM156",
+            "username": "ricpena"
+        },
+        {
+            "name": "PSS1438",
+            "parent": "RM156",
+            "username": "smacedoj"
+        },
+        {
+            "name": "PSS1508",
+            "parent": "RM156",
+            "username": "amolivei"
+        },
+        {
+            "name": "PSS1433",
+            "parent": "RM148",
+            "username": "mimille2"
+        },
+        {
+            "name": "PSS1440",
+            "parent": "RM148",
+            "username": "alihasan"
+        },
+        {
+            "name": "PSS1441",
+            "parent": "RM148",
+            "username": "betbasil"
+        },
+        {
+            "name": "PSS1442",
+            "parent": "RM148",
+            "username": "ccressy"
+        },
+        {
+            "name": "PSS1443",
+            "parent": "RM148",
+            "username": "esanche2"
+        },
+        {
+            "name": "PSS1444",
+            "parent": "RM148",
+            "username": "jihaskin"
+        },
+        {
+            "name": "PSS1445",
+            "parent": "RM148",
+            "username": "matmoren"
+        },
+        {
+            "name": "PSS1446",
+            "parent": "RM148",
+            "username": "tiadams"
+        },
+        {
+            "name": "PSS1447",
+            "parent": "RM148",
+            "username": "winteria"
+        },
+        {
+            "name": "PSS1430",
+            "parent": "RM145",
+            "username": "glynch"
+        }
+    ];
+
+// *********** Convert flat data into a nice tree ***************
+// create a name: node map
+var dataMap = data.reduce(function(map, node) {
+	map[node.name] = node;
+	return map;
+}, {});
+// create the tree array
+var treeData = [];
+data.forEach(function(node) {
+	// add to parent
+	var parent = dataMap[node.parent];
+	if (parent) {
+		// create child array if it doesn't exist
+		(parent.children || (parent.children = []))
+			// add node to child array
+			.push(node);
+	} else {
+		// parent is null or missing
+		treeData.push(node);
+	}
+});
+// ************** Generate the tree diagram	 *****************
+var margin = {top: 20, right: 120, bottom: 20, left: 120},
+	width = 1600- margin.right - margin.left,
+	height = 1000 - margin.top - margin.bottom;
+	
+var i = 0;
+var tree = d3.layout.tree()
+	.size([height, width]);
+var diagonal = d3.svg.diagonal()
+	.projection(function(d) { return [d.y, d.x]; });
+var svg = d3.select("body").append("svg")
+	.attr("width", width + margin.right + margin.left)
+	.attr("height", height + margin.top + margin.bottom)
+  .append("g")
+	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+root = treeData[0];
+  
+update(root);
+function update(source) {
+  // Compute the new tree layout.
+  var nodes = tree.nodes(root).reverse(),
+	  links = tree.links(nodes);
+  // Normalize for fixed-depth.
+  nodes.forEach(function(d) { d.y = d.depth * 180; });
+  // Declare the nodes…
+  var node = svg.selectAll("g.node")
+	  .data(nodes, function(d) { return d.id || (d.id = ++i); });
+  // Enter the nodes.
+  var nodeEnter = node.enter().append("g")
+	  .attr("class", "node")
+	  .attr("transform", function(d) { 
+		  return "translate(" + d.y + "," + d.x + ")"; });
+  nodeEnter.append("circle")
+	  .attr("r", 4.5)
+	  .style("fill", "#fff");
+  nodeEnter.append("text")
+	  .attr("x", function(d) { 
+		  return d.children || d._children ? -13 : 13; })
+	  .attr("dy", ".35em")
+	  .attr("text-anchor", function(d) { 
+		  return d.children || d._children ? "end" : "start"; })
+	  .text(function(d) { return d.name + "-" + d.username; })
+	  .style("fill-opacity", 1);
+  // Declare the links…
+  var link = svg.selectAll("path.link")
+	  .data(links, function(d) { return d.target.id; });
+  // Enter the links.
+  link.enter().insert("path", "g")
+	  .attr("class", "link")
+	  .attr("d", diagonal);
+}
+</script>
+	
+  </body>
+</html>
